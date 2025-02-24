@@ -1,70 +1,137 @@
-# Getting Started with Create React App
+# 🍽️ Recipe Sorting App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A **React + FastAPI** application that helps users find recipes based on available ingredients. The app sorts recipes into four categories: **Exact Match**, **Contains All Ingredients**, **Contains Some Ingredients**, and **No Match**, while also ranking them by simplicity (fewest steps first).
 
-## Available Scripts
+## 🚀 Features
 
-In the project directory, you can run:
+✅ **Ingredient-Based Sorting** - Finds recipes based on user-provided ingredients.  
+✅ **Categorization** - Recipes are grouped into four match categories.  
+✅ **Sorting by Simplicity** - Recipes with fewer steps are prioritized.  
+✅ **Beautiful UI** - Clean and responsive interface with Tailwind CSS.  
+✅ **FastAPI Backend** - Efficient backend handling with optimized search.
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠️ Tech Stack
 
-### `yarn test`
+### Frontend
+- ⚛️ **React.js** - UI framework
+- 🎨 **Tailwind CSS** - Styling and responsiveness
+- 🚦 **React Router** - Navigation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Backend
+- 🚀 **FastAPI** - Backend API
+- 🐍 **Python** - Data processing
+- 📊 **Pandas** - Recipe sorting
+- 🗄️ **CSV Dataset** - Recipe storage
 
-### `yarn build`
+## 📂 Folder Structure
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+recipe_project/
+│── backend/                # Backend API (FastAPI)
+│   ├── main.py            # API logic and recipe processing
+│   ├── random_100_recipes.csv  # Sample dataset
+│── src/                   # React Frontend
+│   ├── pages/             # App pages
+│   │   ├── LandingPage.js
+│   │   ├── FunctionPage.js
+│   ├── App.js            # Main React Component
+│── public/               # Static assets
+│── package.json         # Frontend dependencies
+│── tailwind.config.js   # Tailwind CSS config
+│── README.md           # Project documentation
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## ⚙️ Installation & Setup
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 1️⃣ Clone the Repository
+```sh
+git clone https://github.com/your-username/recipe_project.git
+cd recipe_project
+```
 
-### `yarn eject`
+### 2️⃣ Backend Setup
+```sh
+cd backend
+pip install fastapi uvicorn pandas
+python main.py
+```
+🔹 **Backend will run at:** `http://localhost:5000`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 3️⃣ Frontend Setup
+```sh
+cd src
+yarn install
+yarn start
+```
+🔹 **Frontend will run at:** `http://localhost:3000`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📡 API Endpoints
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/process-data` | Takes user ingredients and returns sorted recipes |
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+**Example Request:**
+```json
+{
+  "ingredients": ["chicken", "onion", "garlic"]
+}
+```
 
-## Learn More
+**Example Response:**
+```json
+{
+  "Exact Match": [],
+  "Contains All Ingredients": [
+    {
+      "title": "Puerto Rican Chicken Soup",
+      "NER": "[chicken, carrots, garlic, onion]",
+      "num_steps": 8
+    }
+  ],
+  "Contains Some Ingredients": [
+    {
+      "title": "Herb Fryer Chicken",
+      "NER": "[lemon juice, olive oil, garlic, chicken]",
+      "num_steps": 2
+    }
+  ],
+  "No Matching Ingredients": [...]
+}
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🚀 Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Deploy Backend on Render/Fly.io:**
+```sh
+pip install fastapi uvicorn
+uvicorn main:app --host 0.0.0.0 --port 5000
+```
 
-### Code Splitting
+**Deploy Frontend on Netlify/Vercel:**
+```sh
+yarn build
+```
+🔹 Upload `build/` to Netlify or Vercel.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🤝 Contributing
 
-### Analyzing the Bundle Size
+💡 Want to improve this project? Contributions are **welcome**!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. **Fork** this repository
+2. **Create a branch** (`feature-new-idea`)
+3. **Commit your changes** (`git commit -m 'Added feature'`)
+4. **Push to GitHub** (`git push origin feature-new-idea`)
+5. **Submit a Pull Request** 🚀
 
-### Making a Progressive Web App
+## 📜 License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+This project is **open-source** and available under the **MIT License**.
 
-### Advanced Configuration
+## 🎯 Contact & Support
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+👨‍💻 **Developed by:** *Sanat Chaudhary*  
+📧 **Email:** sanat23122003@gmail.com  
+🌐 **GitHub:** sanat75
