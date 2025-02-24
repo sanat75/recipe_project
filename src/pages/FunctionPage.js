@@ -14,7 +14,7 @@ const FunctionPage = () => {
     setLoading(true);
   
     try {
-      const response = await fetch("http://localhost:5000/process-data", {
+      const response = await fetch("https://recipe-project-backend-mejp.onrender.com/process-data", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ingredients: ingredients.split(",").map(i => i.trim()) }),
