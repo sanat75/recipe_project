@@ -6,7 +6,7 @@ const LandingPage = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 text-gray-900">
       <div className="text-center max-w-xl px-4">
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-          Recipe Sorting
+          Mealmate
         </h1>
         
         <p className="text-lg text-gray-600 mb-12">
