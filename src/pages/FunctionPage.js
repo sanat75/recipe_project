@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -37,6 +36,27 @@ const FunctionPage = () => {
     }
   
     setLoading(false);
+  };
+
+  // Helper function to format directions
+  const formatDirections = (directions) => {
+    if (!directions) return "No directions available";
+    
+    try {
+      // Parse directions if it's a string representation of an array
+      const parsedDirections = typeof directions === 'string' ? JSON.parse(directions.replace(/'/g, '"')) : directions;
+      
+      if (Array.isArray(parsedDirections)) {
+        return parsedDirections.map((step, index) => (
+          <li key={index} className="mb-1">{step}</li>
+        ));
+      } else {
+        return "Directions format error";
+      }
+    } catch (error) {
+      console.error("Error parsing directions:", error);
+      return "Could not parse directions";
+    }
   };
 
   return (
@@ -100,6 +120,7 @@ const FunctionPage = () => {
                         <tr className="bg-blue-300 text-white">
                           <th className="border border-gray-300 px-4 py-2 text-left">Recipe Name</th>
                           <th className="border border-gray-300 px-4 py-2 text-left">Ingredients</th>
+                          <th className="border border-gray-300 px-4 py-2 text-left">Directions</th>
                           <th className="border border-gray-300 px-4 py-2 text-left">Steps</th>
                           <th className="border border-gray-300 px-4 py-2 text-left">Source</th>
                           <th className="border border-gray-300 px-4 py-2 text-left">Link</th>
@@ -117,6 +138,11 @@ const FunctionPage = () => {
                                 {typeof recipe.NER === 'string' 
                                   ? recipe.NER.replace(/[\[\]"]/g, '') 
                                   : 'No ingredients information'}
+                              </td>
+                              <td className="border border-gray-300 px-4 py-2">
+                                <ul className="list-disc pl-5">
+                                  {recipe.directions && formatDirections(recipe.directions)}
+                                </ul>
                               </td>
                               <td className="border border-gray-300 px-4 py-2 text-center">{recipe.num_steps}</td>
                               <td className="border border-gray-300 px-4 py-2">

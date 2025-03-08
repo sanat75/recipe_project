@@ -112,8 +112,8 @@ def process_data(request: IngredientsRequest):
     categorized_recipes = {}
     for category, label in category_labels.items():
         recipes_in_category = final_sorted_recipes[final_sorted_recipes["category"] == category]
-        # Include source, link, and formatted_link in the output
-        categorized_recipes[label] = recipes_in_category[["title", "NER", "num_steps", "source", "link", "formatted_link"]].to_dict(orient="records")
+        # Include directions in the output along with other fields
+        categorized_recipes[label] = recipes_in_category[["title", "NER", "directions", "num_steps", "source", "link", "formatted_link"]].to_dict(orient="records")
     
     return categorized_recipes
 
