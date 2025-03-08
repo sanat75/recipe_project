@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import pandas as pd
+import json
 
 origins = [
     "*"
@@ -83,6 +84,14 @@ def format_link(link):
         return f"https://{link}"
     return link
 
+# Function to format ingredients with amounts
+def format_ingredients(ingredients_str):
+    try:
+        ingredients_list = eval(ingredients_str)
+        return ingredients_list
+    except:
+        return ["Ingredients information unavailable"]
+
 # API Endpoint to process ingredients and return categorized & sorted recipes
 @app.post("/process-data")
 def process_data(request: IngredientsRequest):
@@ -95,6 +104,9 @@ def process_data(request: IngredientsRequest):
     
     # Format links before returning
     final_sorted_recipes['formatted_link'] = final_sorted_recipes['link'].apply(format_link)
+    
+    # Format ingredients with amounts
+    final_sorted_recipes['full_ingredients'] = final_sorted_recipes['ingredients'].apply(format_ingredients)
     
     # Debug print to console to see what data we're working with
     print("Sample data:")
@@ -113,7 +125,7 @@ def process_data(request: IngredientsRequest):
     for category, label in category_labels.items():
         recipes_in_category = final_sorted_recipes[final_sorted_recipes["category"] == category]
         # Include directions in the output along with other fields
-        categorized_recipes[label] = recipes_in_category[["title", "NER", "directions", "num_steps", "source", "link", "formatted_link"]].to_dict(orient="records")
+        categorized_recipes[label] = recipes_in_category[["title", "NER", "full_ingredients", "directions", "num_steps", "source", "link", "formatted_link"]].to_dict(orient="records")
     
     return categorized_recipes
 

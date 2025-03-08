@@ -59,6 +59,28 @@ const FunctionPage = () => {
     }
   };
 
+  // Helper function to format ingredients with amounts
+  const formatIngredients = (ingredients) => {
+    if (!ingredients) return "No ingredients available";
+    
+    try {
+      if (Array.isArray(ingredients)) {
+        return (
+          <ul className="list-disc pl-5">
+            {ingredients.map((ingredient, index) => (
+              <li key={index} className="mb-1">{ingredient}</li>
+            ))}
+          </ul>
+        );
+      } else {
+        return "Ingredients format error";
+      }
+    } catch (error) {
+      console.error("Error parsing ingredients:", error);
+      return "Could not parse ingredients";
+    }
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen bg-gradient-to-r from-blue-100 to-blue-300 p-4 md:p-6">
       <div className="w-full max-w-5xl">
@@ -119,7 +141,7 @@ const FunctionPage = () => {
                       <thead>
                         <tr className="bg-blue-300 text-white">
                           <th className="border border-gray-300 px-4 py-2 text-left">Recipe Name</th>
-                          <th className="border border-gray-300 px-4 py-2 text-left">Ingredients</th>
+                          <th className="border border-gray-300 px-4 py-2 text-left">Ingredients (With Amounts)</th>
                           <th className="border border-gray-300 px-4 py-2 text-left">Directions</th>
                           <th className="border border-gray-300 px-4 py-2 text-left">Steps</th>
                           <th className="border border-gray-300 px-4 py-2 text-left">Source</th>
@@ -135,9 +157,11 @@ const FunctionPage = () => {
                             <tr key={index} className="hover:bg-blue-200">
                               <td className="border border-gray-300 px-4 py-2">{recipe.title}</td>
                               <td className="border border-gray-300 px-4 py-2">
-                                {typeof recipe.NER === 'string' 
-                                  ? recipe.NER.replace(/[\[\]"]/g, '') 
-                                  : 'No ingredients information'}
+                                {recipe.full_ingredients ? formatIngredients(recipe.full_ingredients) : (
+                                  typeof recipe.NER === 'string' 
+                                    ? recipe.NER.replace(/[\[\]"]/g, '') 
+                                    : 'No ingredients information'
+                                )}
                               </td>
                               <td className="border border-gray-300 px-4 py-2">
                                 <ul className="list-disc pl-5">
